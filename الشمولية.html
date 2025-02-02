@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التنوع والإنصاف والشمولية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a676f;
+            --secondary-color: #a98a50;
+            --correct-bg: #e8f5e9;
+            --incorrect-bg: #ffebee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .quiz-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(45deg, var(--primary-color), #1d4a50);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 1rem;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(42,103,111,0.3);
+        }
+
+        .question {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateX(5px);
+            border-color: var(--primary-color);
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .options label:hover {
+            background: #e3f2fd;
+            transform: scale(1.02);
+        }
+
+        .options input[type="radio"] {
+            margin-left: 1rem;
+            transform: scale(1.2);
+        }
+
+        .answer-box {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .correct {
+            background: var(--correct-bg);
+            border: 2px solid #81c784;
+        }
+
+        .incorrect {
+            background: var(--incorrect-bg);
+            border: 2px solid #ef9a9a;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scroll-btn {
+            position: fixed;
+            padding: 12px 15px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .scroll-top { bottom: 80px; left: 20px; }
+        .scroll-bottom { bottom: 20px; left: 20px; }
+    </style>
+</head>
+<body>
+
+	<div style="position: fixed; bottom: 15px; right: 15px; background: #2a676f; color: white; padding: 5px 10px; border-radius: 8px; font-size: 12px;">
+    دعواتكم بالتوفيق والزوجة الصالحة
+</div>
+
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>التنوع والإنصاف والشمولية</h1>
+            <p>اختر الإجابة الصحيحة لكل سؤال</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="resetQuiz()">إعادة التعيين</button>
+            <button class="btn" onclick="showAllAnswers()">عرض الكل</button>
+            <button class="btn" onclick="hideAllAnswers()">إخفاء الكل</button>
+        </div>
+
+        <div class="question">
+            <h3>1. التنوع يقتصر فقط على العرق والجنس.</h3>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q1" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer1" data-correct="b" data-reason="الشرح: يشمل التنوع العمر، الدين، الثقافة، الخلفية الاجتماعية والاقتصادية، والتجارب الحياتية المختلفة."></div>
+        </div>
+
+        <div class="question">
+            <h3>2. الشمولية تعني توفير بيئة يشعر فيها الجميع بالقبول والمساواة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q2" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer2" data-correct="a" data-reason="الشرح: الشمولية تضمن إشراك جميع الأفراد دون تمييز وتعزيز شعورهم بالانتماء."></div>
+        </div>
+
+        <div class="question">
+            <h3>3. ما هو الفرق الرئيسي بين المساواة والإنصاف؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> أ) المساواة تعني تقديم نفس الموارد للجميع، بينما الإنصاف يعني توزيع الموارد وفق الاحتياجات الفردية.</label>
+                <label><input type="radio" name="q3" value="b"> ب) المساواة تعني تقديم موارد أكثر للمحتاجين.</label>
+                <label><input type="radio" name="q3" value="c"> ج) الإنصاف والمساواة هما نفس الشيء.</label>
+                <label><input type="radio" name="q3" value="d"> د) الإنصاف يركز فقط على الطلاب ذوي الإعاقة.</label>
+            </div>
+            <div class="answer-box" id="answer3" data-correct="a" data-reason="الشرح: المساواة تعني تقديم نفس الموارد، بينما الإنصاف يوزع الموارد حسب الحاجة."></div>
+        </div>
+
+        <div class="question">
+            <h3>4. المساواة دائمًا تؤدي إلى تحقيق العدالة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q4" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer4" data-correct="b" data-reason="الشرح: المساواة قد لا تحقق العدالة لأنها لا تأخذ في الاعتبار احتياجات الأفراد المختلفة."></div>
+        </div>
+
+        <div class="question">
+            <h3>5. الشمولية تعني إشراك الجميع في المجتمع بغض النظر عن اختلافاتهم.</h3>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q5" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer5" data-correct="a" data-reason="الشرح: الشمولية تتعلق بخلق بيئة يشعر فيها الجميع بالقبول والمشاركة الفعالة."></div>
+        </div>
+
+        <div class="question">
+            <h3>6. ما هو الهدف الأساسي من الدمج الشامل في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q6" value="a"> أ) تقديم تعليم موحد للجميع بدون استثناء.</label>
+                <label><input type="radio" name="q6" value="b"> ب) توفير بيئة تعليمية تناسب جميع الطلاب وفق احتياجاتهم.</label>
+                <label><input type="radio" name="q6" value="c"> ج) عزل الطلاب ذوي الاحتياجات الخاصة.</label>
+                <label><input type="radio" name="q6" value="d"> د) تقديم التعليم فقط للطلاب المتفوقين.</label>
+            </div>
+            <div class="answer-box" id="answer6" data-correct="b" data-reason="الشرح: الهدف هو تلبية احتياجات جميع الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>7. العدالة الرأسية في التعليم تعني تقديم نفس الموارد لجميع الطلاب بغض النظر عن احتياجاتهم.</h3>
+            <div class="options">
+                <label><input type="radio" name="q7" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q7" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer7" data-correct="b" data-reason="الشرح: العدالة الرأسية تهدف إلى منح دعم إضافي لمن يحتاجون إليه."></div>
+        </div>
+
+        <div class="question">
+            <h3>8. التنوع في بيئة العمل يزيد من فرص الابتكار والإبداع.</h3>
+            <div class="options">
+                <label><input type="radio" name="q8" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q8" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer8" data-correct="a" data-reason="الشرح: خلفيات متنوعة تثمر عن أفكار جديدة وحلول مبتكرة."></div>
+        </div>
+
+        <div class="question">
+            <h3>9. أي من العوامل التالية يُعتبر من أبعاد التنوع؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q9" value="a"> أ) العمر</label>
+                <label><input type="radio" name="q9" value="b"> ب) لون العيون</label>
+                <label><input type="radio" name="q9" value="c"> ج) الطول</label>
+                <label><input type="radio" name="q9" value="d"> د) حجم الحذاء</label>
+            </div>
+            <div class="answer-box" id="answer9" data-correct="a" data-reason="الشرح: العمر هو بعد من أبعاد التنوع."></div>
+        </div>
+
+        <div class="question">
+            <h3>10. ما هي الفائدة الأساسية من تطبيق الشمولية في المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q10" value="a"> أ) تقليل تكاليف التشغيل.</label>
+                <label><input type="radio" name="q10" value="b"> ب) تحسين بيئة العمل وزيادة الإنتاجية.</label>
+                <label><input type="radio" name="q10" value="c"> ج) تقليل فرص العمل للأقليات.</label>
+                <label><input type="radio" name="q10" value="d"> د) تقليل التنوع داخل المؤسسة.</label>
+            </div>
+            <div class="answer-box" id="answer10" data-correct="b" data-reason="الشرح: توفر بيئة شاملة تحمل فوائد كبيرة للمؤسسات."></div>
+        </div>
+
+        <div class="question">
+            <h3>11. الدمج الشامل يركز فقط على الطلاب ذوي الإعاقة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q11" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q11" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer11" data-correct="b" data-reason="الشرح: الدمج الشامل يشمل جميع الفئات بغض النظر عن احتياجاتهم."></div>
+        </div>
+
+        <div class="question">
+            <h3>12. ما الذي يميز بيئة عمل شاملة؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q12" value="a"> أ) توفير فرص متساوية للجميع دون تمييز.</label>
+                <label><input type="radio" name="q12" value="b"> ب) الاهتمام فقط بالموظفين ذوي الكفاءات العالية.</label>
+                <label><input type="radio" name="q12" value="c"> ج) استبعاد الموظفين الذين يختلفون عن الأغلبية.</label>
+                <label><input type="radio" name="q12" value="d"> د) تطبيق سياسة موحدة للجميع دون استثناء.</label>
+            </div>
+            <div class="answer-box" id="answer12" data-correct="a" data-reason="الشرح: بيئة العمل الشاملة تعني تقديم فرص متساوية للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>13. التنوع في التعليم يساعد على تحسين تجربة التعلم لجميع الطلاب.</h3>
+            <div class="options">
+                <label><input type="radio" name="q13" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q13" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer13" data-correct="a" data-reason="الشرح: التعلم في بيئة متنوعة يزيد من فهم الطلاب لوجهات نظر مختلفة."></div>
+        </div>
+
+        <div class="question">
+            <h3>14. أي مما يلي يعبر عن مفهوم الدمج الشامل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q14" value="a"> أ) تقديم نفس الأساليب التعليمية لجميع الطلاب.</label>
+                <label><input type="radio" name="q14" value="b"> ب) تكييف المناهج لتناسب احتياجات الطلاب المختلفة.</label>
+                <label><input type="radio" name="q14" value="c"> ج) تخصيص موارد إضافية فقط للطلاب المتفوقين.</label>
+                <label><input type="radio" name="q14" value="d"> د) استبعاد الطلاب الذين يواجهون صعوبات تعليمية.</label>
+            </div>
+            <div class="answer-box" id="answer14" data-correct="b" data-reason="الشرح: تكييف المناهج يعني مراعاة احتياجات جميع الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>15. ما هو الفرق بين الدمج الشامل والتمييز الإيجابي؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q15" value="a"> أ) الدمج الشامل يسعى لمعاملة الجميع بعدالة، بينما التمييز الإيجابي يمنح امتيازات لفئة معينة.</label>
+                <label><input type="radio" name="q15" value="b"> ب) لا يوجد فرق بينهما.</label>
+                <label><input type="radio" name="q15" value="c"> ج) الدمج الشامل يركز على الأقليات فقط.</label>
+                <label><input type="radio" name="q15" value="d"> د) التمييز الإيجابي يقلل من فرص الجميع.</label>
+            </div>
+            <div class="answer-box" id="answer15" data-correct="a" data-reason="الشرح: الدمج الشامل يمنح الجميع الفرص المتساوية، بينما التمييز الإيجابي يعطي الأفضلية لفئة معينة."></div>
+        </div>
+
+        <div class="question">
+            <h3>16. التنوع في بيئة العمل يؤدي إلى زيادة المشكلات بين الموظفين.</h3>
+            <div class="options">
+                <label><input type="radio" name="q16" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q16" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer16" data-correct="b" data-reason="الشرح: التنوع يعزز الإبداع ويزيد من كفاءة الفرق."></div>
+        </div>
+
+        <div class="question">
+            <h3>17. ما هو الدور الأساسي للعدالة الأفقية في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q17" value="a"> أ) تقديم نفس الموارد لجميع الطلاب.</label>
+                <label><input type="radio" name="q17" value="b"> ب) إعطاء الأفضلية للطلاب المتفوقين.</label>
+                <label><input type="radio" name="q17" value="c"> ج) توفير موارد إضافية فقط للطلاب الموهوبين.</label>
+                <label><input type="radio" name="q17" value="d"> د) منع الطلاب من الحصول على دعم إضافي.</label>
+            </div>
+            <div class="answer-box" id="answer17" data-correct="a" data-reason="الشرح: العدالة الأفقية تعني تقديم فرص متساوية لجميع الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>18. ما هو أحد أهم فوائد المساواة في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q18" value="a"> أ) تحقيق تكافؤ الفرص بين جميع الطلاب.</label>
+                <label><input type="radio" name="q18" value="b"> ب) تقديم التعليم فقط للطلاب الأذكياء.</label>
+                <label><input type="radio" name="q18" value="c"> ج) استبعاد الطلاب الذين لديهم صعوبات تعليمية.</label>
+                <label><input type="radio" name="q18" value="d"> د) منع الأقليات من الحصول على تعليم متقدم.</label>
+            </div>
+            <div class="answer-box" id="answer18" data-correct="a" data-reason="الشرح: المساواة ضمان لتكافؤ الفرص للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>19. ما هو الهدف الأساسي من وجود تنوع في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q19" value="a"> أ) تحسين الابتكار وزيادة الأداء العام.</label>
+                <label><input type="radio" name="q19" value="b"> ب) تقليل فرص الأفراد من الفئات الأقل تمثيلًا.</label>
+                <label><input type="radio" name="q19" value="c"> ج) تقليل الحاجة إلى التدريب والتطوير.</label>
+                <label><input type="radio" name="q19" value="d"> د) استبعاد الفئات غير الممثلة بشكل جيد.</label>
+            </div>
+            <div class="answer-box" id="answer19" data-correct="a" data-reason="الشرح: التنوع يعزز الأداء العام ويزيد من الابتكار."></div>
+        </div>
+
+        <div class="question">
+            <h3>20. التنوع في بيئة العمل لا يؤثر على نجاح المؤسسة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q20" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q20" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer20" data-correct="b" data-reason="الشرح: التنوع يعزز الإنتاجية والابتكار داخل المؤسسات."></div>
+        </div>
+
+        <div class="question">
+            <h3>21. ما هو الفرق بين التعليم المتكامل والتعليم الشامل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q21" value="a"> أ) التعليم المتكامل يدمج جميع الطلاب في بيئة واحدة، بينما التعليم الشامل يكيف المناهج وفق احتياجات الجميع.</label>
+                <label><input type="radio" name="q21" value="b"> ب) التعليم المتكامل يركز على الطلاب الموهوبين فقط.</label>
+                <label><input type="radio" name="q21" value="c"> ج) لا يوجد فرق بينهما.</label>
+                <label><input type="radio" name="q21" value="d"> د) التعليم الشامل مخصص فقط للطلاب ذوي الاحتياجات الخاصة.</label>
+            </div>
+            <div class="answer-box" id="answer21" data-correct="a" data-reason="الشرح: التعليم الشامل يهدف لتلبية احتياجات الجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>22. ما هو التأثير الرئيسي للتنوع على الفرق العاملة؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q22" value="a"> أ) تحسين حل المشكلات وتعزيز التعاون.</label>
+                <label><input type="radio" name="q22" value="b"> ب) تقليل فرص النجاح الجماعي.</label>
+                <label><input type="radio" name="q22" value="c"> ج) إحداث صراعات داخل الفريق.</label>
+                <label><input type="radio" name="q22" value="d"> د) التأثير السلبي على اتخاذ القرارات.</label>
+            </div>
+            <div class="answer-box" id="answer22" data-correct="a" data-reason="الشرح: التنوع يساعد في حل المشكلات بفاعلية أكبر."></div>
+        </div>
+
+        <div class="question">
+            <h3>23. لماذا يُعد الإنصاف ضروريًا في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q23" value="a"> أ) لأنه يضمن حصول كل طالب على ما يحتاجه لتحقيق النجاح.</label>
+                <label><input type="radio" name="q23" value="b"> ب) لأنه يعامل جميع الطلاب بنفس الطريقة تمامًا.</label>
+                <label><input type="radio" name="q23" value="c"> ج) لأنه يركز فقط على الطلاب المتفوقين.</label>
+                <label><input type="radio" name="q23" value="d"> د) لأنه يقلل من فرص بعض الطلاب لتحقيق النجاح.</label>
+            </div>
+            <div class="answer-box" id="answer23" data-correct="a" data-reason="الشرح: الإنصاف يضمن الدعم المناسب لكل طالب."></div>
+        </div>
+
+        <div class="question">
+            <h3>24. ما هو الدور الأساسي للشمولية في المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q24" value="a"> أ) تعزيز بيئة عمل يشعر فيها الجميع بالقبول والمساواة.</label>
+                <label><input type="radio" name="q24" value="b"> ب) زيادة التمييز بين الموظفين.</label>
+                <label><input type="radio" name="q24" value="c"> ج) تقليل فرص الفئات الأقل تمثيلًا.</label>
+                <label><input type="radio" name="q24" value="d"> د) تقييد التنوع داخل المؤسسة.</label>
+            </div>
+            <div class="answer-box" id="answer24" data-correct="a" data-reason="الشرح: الشمولية تهدف لخلق بيئة شاملة للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>25. العدالة الأفقية في التعليم تعني تقديم نفس الدعم لجميع الطلاب دون النظر إلى احتياجاتهم الفردية.</h3>
+            <div class="options">
+                <label><input type="radio" name="q25" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q25" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer25" data-correct="b" data-reason="الشرح: العدالة الأفقية تهدف لتحقيق تكافؤ الفرص للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>26. التنوع في المؤسسات يؤدي إلى انخفاض الكفاءة والإنتاجية.</h3>
+            <div class="options">
+                <label><input type="radio" name="q26" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q26" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer26" data-correct="b" data-reason="الشرح: التنوع يعزز الابتكار وزيادة الإنتاجية."></div>
+        </div>
+
+        <div class="question">
+            <h3>27. الشمولية تعني إشراك الأفراد بشكل نشط في بيئة العمل أو المجتمع.</h3>
+            <div class="options">
+                <label><input type="radio" name="q27" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q27" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer27" data-correct="a" data-reason="الشرح: الشمولية تعني توفير فرص متساوية وضمان الانتماء والاحترام."></div>
+        </div>
+
+        <div class="question">
+            <h3>28. ما هو الهدف الأساسي من تعزيز الشمولية في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q28" value="a"> أ) توفير فرص متساوية لجميع الطلاب دون استثناء.</label>
+                <label><input type="radio" name="q28" value="b"> ب) التركيز فقط على الطلاب ذوي الاحتياجات الخاصة.</label>
+                <label><input type="radio" name="q28" value="c"> ج) استبعاد الطلاب ذوي الصعوبات التعليمية.</label>
+                <label><input type="radio" name="q28" value="d"> د) تقديم الدعم فقط للطلاب المتفوقين.</label>
+            </div>
+            <div class="answer-box" id="answer28" data-correct="a" data-reason="الشرح: تعزيز الشمولية يساعد في توفير فرص تعلم متساوية للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>29. الإنصاف في بيئة العمل يعني إعطاء الجميع نفس الحقوق والفرص بغض النظر عن احتياجاتهم الفردية.</h3>
+            <div class="options">
+                <label><input type="radio" name="q29" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q29" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer29" data-correct="b" data-reason="الشرح: الإنصاف يعني تقديم الدعم حسب احتياجات الأفراد لتحقيق العدالة."></div>
+        </div>
+
+        <div class="question">
+            <h3>30. ما الفرق بين الشمولية والتنوع؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q30" value="a"> أ) التنوع يشير إلى الاختلافات بين الأفراد، بينما الشمولية تعني احترام هذه الاختلافات وإشراك الجميع.</label>
+                <label><input type="radio" name="q30" value="b"> ب) لا يوجد فرق بينهما.</label>
+                <label><input type="radio" name="q30" value="c"> ج) التنوع يتعلق فقط بالفئات المهمشة، بينما الشمولية تعني إعطاء الفرص للجميع.</label>
+                <label><input type="radio" name="q30" value="d"> د) التنوع يهتم بالتمييز الإيجابي فقط.</label>
+            </div>
+            <div class="answer-box" id="answer30" data-correct="a" data-reason="الشرح: التنوع والشمولية يعملان معاً لتعزيز التفاهم والاحترام."></div>
+        </div>
+
+        <div class="question">
+            <h3>31. تحقيق المساواة في بيئة العمل يؤدي دائمًا إلى تحقيق العدالة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q31" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q31" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer31" data-correct="b" data-reason="الشرح: المساواة قد لا تأخذ في الاعتبار احتياجات الأفراد المختلفة كما يفعل الإنصاف."></div>
+        </div>
+
+        <div class="question">
+            <h3>32. أي مما يلي يعد من مبادئ الدمج الشامل في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q32" value="a"> أ) قبول جميع الطلاب بغض النظر عن خلفياتهم أو قدراتهم.</label>
+                <label><input type="radio" name="q32" value="b"> ب) تخصيص مدارس خاصة للطلاب ذوي الإعاقة فقط.</label>
+                <label><input type="radio" name="q32" value="c"> ج) تجاهل احتياجات الطلاب المختلفين والتركيز على المناهج التقليدية.</label>
+                <label><input type="radio" name="q32" value="d"> د) تقديم نفس نوع التعليم لجميع الطلاب بدون استثناء.</label>
+            </div>
+            <div class="answer-box" id="answer32" data-correct="a" data-reason="الشرح: الدمج الشامل يتطلب قبول كافة الطلاب واحترام احتياجاتهم."></div>
+        </div>
+
+        <div class="question">
+            <h3>33. وجود بيئة شاملة في المؤسسات يساعد على جذب المواهب والاحتفاظ بها.</h3>
+            <div class="options">
+                <label><input type="radio" name="q33" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q33" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer33" data-correct="a" data-reason="الشرح: المؤسسات الشاملة تجمع بين الموظفين الموهوبين من خلفيات متنوعة."></div>
+        </div>
+
+        <div class="question">
+            <h3>34. ما هو الهدف الأساسي من تحقيق العدالة الرأسية في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q34" value="a"> أ) توفير موارد إضافية للمجموعات المحرومة لضمان تكافؤ الفرص.</label>
+                <label><input type="radio" name="q34" value="b"> ب) تقديم نفس الموارد لجميع الطلاب دون النظر إلى احتياجاتهم.</label>
+                <label><input type="radio" name="q34" value="c"> ج) التركيز فقط على الطلاب المتفوقين.</label>
+                <label><input type="radio" name="q34" value="d"> د) منع الفئات المهمشة من الحصول على دعم إضافي.</label>
+            </div>
+            <div class="answer-box" id="answer34" data-correct="a" data-reason="الشرح: العدالة الرأسية توفر الدعم اللازم للفئات الأكثر احتياجًا."></div>
+        </div>
+
+        <div class="question">
+            <h3>35. التنوع والشمولية غير مهمين في بيئة العمل الحديثة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q35" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q35" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer35" data-correct="b" data-reason="الشرح: التنوع والشمولية ضروريان لتعزيز الابتكار وتحسين الأداء."></div>
+        </div>
+
+        <div class="question">
+            <h3>36. ما هو أحد أسباب مقاومة الدمج الشامل في بعض المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q36" value="a"> أ) نقص الوعي حول فوائده.</label>
+                <label><input type="radio" name="q36" value="b"> ب) زيادة الإنتاجية بسببه.</label>
+                <label><input type="radio" name="q36" value="c"> ج) تحسين بيئة العمل بشكل كبير.</label>
+                <label><input type="radio" name="q36" value="d"> د) تسهيل التعاون بين الموظفين.</label>
+            </div>
+            <div class="answer-box" id="answer36" data-correct="a" data-reason="الشرح: نقص الوعي يمكن أن يعرقل تطبيق الدمج الشامل."></div>
+        </div>
+
+        <div class="question">
+            <h3>37. يمكن تحقيق الشمولية في التعليم من خلال تكييف المناهج والبيئة التعليمية لتناسب الجميع.</h3>
+            <div class="options">
+                <label><input type="radio" name="q37" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q37" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer37" data-correct="a" data-reason="الشرح: التكييف يساعد في توفير فرص متساوية للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>38. ما هي العلاقة بين التنوع والابتكار في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q38" value="a"> أ) كلما زاد التنوع، زادت فرص الابتكار والإبداع.</label>
+                <label><input type="radio" name="q38" value="b"> ب) يقل الابتكار عند زيادة التنوع.</label>
+                <label><input type="radio" name="q38" value="c"> ج) التنوع لا يؤثر على الابتكار.</label>
+                <label><input type="radio" name="q38" value="d"> د) يقلل التنوع من فعالية الفرق العاملة.</label>
+            </div>
+            <div class="answer-box" id="answer38" data-correct="a" data-reason="الشرح: التنوع يعزز الأفكار الجديدة والمبتكرة."></div>
+        </div>
+
+        <div class="question">
+            <h3>39. المساواة في التعليم تضمن أن جميع الطلاب يحصلون على نفس الدعم بغض النظر عن احتياجاتهم.</h3>
+            <div class="options">
+                <label><input type="radio" name="q39" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q39" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer39" data-correct="b" data-reason="الشرح: المساواة قد لا تلبي احتياجات الجميع كما يفعل الإنصاف."></div>
+        </div>
+
+        <div class="question">
+            <h3>40. أي من العوامل التالية يساعد في تحقيق بيئة شاملة؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q40" value="a"> أ) احترام الفروقات الفردية وتشجيع التنوع.</label>
+                <label><input type="radio" name="q40" value="b"> ب) تمييز بعض الفئات عن الأخرى.</label>
+                <label><input type="radio" name="q40" value="c"> ج) تجاهل احتياجات الأفراد المختلفين.</label>
+                <label><input type="radio" name="q40" value="d"> د) توظيف أشخاص من نفس الخلفية الثقافية فقط.</label>
+            </div>
+            <div class="answer-box" id="answer40" data-correct="a" data-reason="الشرح: التقدير والاحترام يعززان بيئة شاملة."></div>
+        </div>
+
+        <div class="question">
+            <h3>41. تطبيق سياسات شاملة في المؤسسات يؤدي إلى تحسين الأداء العام.</h3>
+            <div class="options">
+                <label><input type="radio" name="q41" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q41" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer41" data-correct="a" data-reason="الشرح: السياسات الشاملة تعزز التعاون وتحسن الأداء العام."></div>
+        </div>
+
+        <div class="question">
+            <h3>42. التنوع في التعليم لا يؤثر على تجربة التعلم للطلاب.</h3>
+            <div class="options">
+                <label><input type="radio" name="q42" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q42" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer42" data-correct="b" data-reason="الشرح: التنوع يعزز تجارب التعلم ويزيد من الفهم الثقافي."></div>
+        </div>
+
+        <div class="question">
+            <h3>43. ما هي إحدى طرق دعم الإنصاف في المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q43" value="a"> أ) توفير فرص متكافئة لجميع الموظفين بناءً على احتياجاتهم.</label>
+                <label><input type="radio" name="q43" value="b"> ب) إعطاء جميع الموظفين نفس الموارد دون النظر إلى احتياجاتهم المختلفة.</label>
+                <label><input type="radio" name="q43" value="c"> ج) منح امتيازات لفئة معينة من الموظفين فقط.</label>
+                <label><input type="radio" name="q43" value="d"> د) تطبيق نفس القوانين على الجميع بغض النظر عن وضعهم الشخصي.</label>
+            </div>
+            <div class="answer-box" id="answer43" data-correct="a" data-reason="الشرح: توفير فرص متكافئة استجابةً للاحتياجات يعزز الإنصاف."></div>
+        </div>
+
+        <div class="question">
+            <h3>44. وجود بيئة شاملة يقلل من شعور الأفراد بالتمييز.</h3>
+            <div class="options">
+                <label><input type="radio" name="q44" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q44" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer44" data-correct="a" data-reason="الشرح: شعور الأفراد بالتقدير والانتماء يقلل التمييز."></div>
+        </div>
+
+        <div class="question">
+            <h3>45. ما هو أحد التحديات التي تواجه تحقيق التنوع في بيئات العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q45" value="a"> أ) مقاومة التغيير بسبب العادات الثقافية.</label>
+                <label><input type="radio" name="q45" value="b"> ب) زيادة فرص الإبداع داخل المؤسسة.</label>
+                <label><input type="radio" name="q45" value="c"> ج) تعزيز التعاون بين الموظفين المختلفين.</label>
+                <label><input type="radio" name="q45" value="d"> د) تحسين الإنتاجية داخل الفريق.</label>
+            </div>
+            <div class="answer-box" id="answer45" data-correct="a" data-reason="الشرح: المقاومة الثقافية يمكن أن تعوق عملية التنوع."></div>
+        </div>
+
+        <div class="question">
+            <h3>46. التنوع يمكن أن يؤدي إلى زيادة المشاكل داخل الفرق العاملة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q46" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q46" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer46" data-correct="b" data-reason="الشرح: التنوع فقط يستدعي إدارة جيدة للتحكم بالمشاكل."></div>
+        </div>
+
+        <div class="question">
+            <h3>47. ما هي فائدة الدمج الشامل في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q47" value="a"> أ) زيادة فرص التعلم لجميع الطلاب بغض النظر عن قدراتهم.</label>
+                <label><input type="radio" name="q47" value="b"> ب) استبعاد الطلاب الذين لديهم صعوبات تعليمية.</label>
+                <label><input type="radio" name="q47" value="c"> ج) تقديم نفس المناهج لجميع الطلاب دون تكييفها.</label>
+                <label><input type="radio" name="q47" value="d"> د) تقليل فرص الطلاب ذوي الاحتياجات الخاصة في التعلم.</label>
+            </div>
+            <div class="answer-box" id="answer47" data-correct="a" data-reason="الشرح: الدمج الشامل يزيد من فرص التعلم للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>48. الشمولية تساعد على تحسين العلاقات بين الأفراد داخل المؤسسة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q48" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q48" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer48" data-correct="a" data-reason="الشرح: الشمولية تعزز من التعاون والاحترام المتبادل."></div>
+        </div>
+
+        <div class="question">
+            <h3>49. ما هو التأثير الإيجابي للتنوع في المجتمع؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q49" value="a"> أ) زيادة التفاهم بين الثقافات المختلفة.</label>
+                <label><input type="radio" name="q49" value="b"> ب) تقليل فرص التواصل بين الأفراد.</label>
+                <label><input type="radio" name="q49" value="c"> ج) خلق صراعات ثقافية.</label>
+                <label><input type="radio" name="q49" value="d"> د) تقليل فرص النجاح الاجتماعي.</label>
+            </div>
+            <div class="answer-box" id="answer49" data-correct="a" data-reason="الشرح: التنوع يعزز التفاهم بين الثقافات المختلفة."></div>
+        </div>
+
+        <div class="question">
+            <h3>50. ما هو دور القادة في تحقيق الشمولية داخل المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q50" value="a"> أ) تعزيز ثقافة القبول والاحترام بين جميع الموظفين.</label>
+                <label><input type="radio" name="q50" value="b"> ب) تجاهل احتياجات الموظفين المختلفة.</label>
+                <label><input type="radio" name="q50" value="c"> ج) دعم مجموعة معينة فقط من الأفراد.</label>
+                <label><input type="radio" name="q50" value="d"> د) فرض سياسات تقيد التنوع داخل المؤسسة.</label>
+            </div>
+            <div class="answer-box" id="answer50" data-correct="a" data-reason="الشرح: القادة يلعبون دوراً أساسياً في تعزيز الشمولية."></div>
+        </div>
+
+        <div class="question">
+            <h3>51. العدالة الرأسية في التعليم تهدف إلى إعطاء جميع الطلاب نفس الموارد دون استثناء.</h3>
+            <div class="options">
+                <label><input type="radio" name="q51" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q51" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer51" data-correct="b" data-reason="الشرح: العدالة الرأسية تعني تقديم دعم إضافي للمجموعات المحرومة."></div>
+        </div>
+
+        <div class="question">
+            <h3>52. ما هي أحد أهم فوائد التنوع في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q52" value="a"> أ) زيادة فرص الابتكار وحل المشكلات.</label>
+                <label><input type="radio" name="q52" value="b"> ب) زيادة الصراعات بين الموظفين.</label>
+                <label><input type="radio" name="q52" value="c"> ج) تقليل فرص النجاح الجماعي.</label>
+                <label><input type="radio" name="q52" value="d"> د) جعل بيئة العمل أكثر تعقيدًا.</label>
+            </div>
+            <div class="answer-box" id="answer52" data-correct="a" data-reason="الشرح: التنوع يعزز الإبداع ويزيد من حلول المشكلات."></div>
+        </div>
+
+        <div class="question">
+            <h3>53. تحقيق الشمولية في المؤسسات يساعد على تقليل التمييز وزيادة الانتماء.</h3>
+            <div class="options">
+                <label><input type="radio" name="q53" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q53" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer53" data-correct="a" data-reason="الشرح: الشمولية تعزز الشعور بالإيجابية والانتماء."></div>
+        </div>
+
+        <div class="question">
+            <h3>54. ما هو الفرق بين العدالة الأفقية والرأسية؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q54" value="a"> أ) العدالة الأفقية تعني تقديم نفس الموارد للجميع، بينما العدالة الرأسية تعني توزيع الموارد بناءً على الاحتياجات.</label>
+                <label><input type="radio" name="q54" value="b"> ب) العدالة الرأسية تعني تقديم نفس الدعم للجميع دون استثناء.</label>
+                <label><input type="radio" name="q54" value="c"> ج) العدالة الأفقية تركز فقط على الفئات الضعيفة.</label>
+                <label><input type="radio" name="q54" value="d"> د) لا يوجد فرق بينهما.</label>
+            </div>
+            <div class="answer-box" id="answer54" data-correct="a" data-reason="الشرح: هناك فرق أساسي بين العدالة الأفقية والرأسية في المعاملة."></div>
+        </div>
+
+        <div class="question">
+            <h3>55. ما هو أحد الأسباب التي تجعل التنوع مفيدًا في المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q55" value="a"> أ) يوفر وجهات نظر متعددة تؤدي إلى اتخاذ قرارات أفضل.</label>
+                <label><input type="radio" name="q55" value="b"> ب) يقلل من كفاءة الفريق.</label>
+                <label><input type="radio" name="q55" value="c"> ج) يسبب مشكلات في الاتصال بين الموظفين.</label>
+                <label><input type="radio" name="q55" value="d"> د) يزيد من التعقيدات الإدارية.</label>
+            </div>
+            <div class="answer-box" id="answer55" data-correct="a" data-reason="الشرح: التنوع يساعد في صناعة قرارات مستنيرة."></div>
+        </div>
+
+        <div class="question">
+            <h3>56. المساواة تعني دائمًا تحقيق الإنصاف.</h3>
+            <div class="options">
+                <label><input type="radio" name="q56" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q56" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer56" data-correct="b" data-reason="الشرح: المساواة تعني نفس الموارد، بينما الإنصاف يعني البكالوريوس حسب الاحتياجات."></div>
+        </div>
+
+        <div class="question">
+            <h3>57. أي مما يلي يُعتبر من أهداف الدمج الشامل في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q57" value="a"> أ) توفير بيئة تعليمية تدعم جميع الطلاب بغض النظر عن اختلافاتهم.</label>
+                <label><input type="radio" name="q57" value="b"> ب) التركيز فقط على الطلاب الموهوبين.</label>
+                <label><input type="radio" name="q57" value="c"> ج) عزل الطلاب ذوي الاحتياجات الخاصة.</label>
+                <label><input type="radio" name="q57" value="d"> د) تقديم نفس المناهج للجميع بدون أي تعديلات.</label>
+            </div>
+            <div class="answer-box" id="answer57" data-correct="a" data-reason="الشرح: الدمج الشامل يسعى لدعم جميع الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>58. التنوع يساعد على تحسين التفاعل الاجتماعي بين الأفراد من خلفيات مختلفة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q58" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q58" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer58" data-correct="a" data-reason="الشرح: تنوع الثقافات يعزز التفاعل."></div>
+        </div>
+
+        <div class="question">
+            <h3>59. أي من العوامل التالية لا يعتبر من أبعاد التنوع؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q59" value="a"> أ) العمر</label>
+                <label><input type="radio" name="q59" value="b"> ب) الخلفية الاجتماعية</label>
+                <label><input type="radio" name="q59" value="c"> ج) لون الشعر</label>
+                <label><input type="radio" name="q59" value="d"> د) اللغة</label>
+            </div>
+            <div class="answer-box" id="answer59" data-correct="c" data-reason="الشرح: لون الشعر ليس بعدًا Divers."></div>
+        </div>
+
+        <div class="question">
+            <h3>60. تحقيق الشمولية في التعليم يؤدي إلى تحسين أداء جميع الطلاب.</h3>
+            <div class="options">
+                <label><input type="radio" name="q60" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q60" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer60" data-correct="a" data-reason="الشرح: فرص متساوية تعزز الأداء."></div>
+        </div>
+
+        <div class="question">
+            <h3>61. ما هو الفرق بين الدمج الشامل والتمييز الإيجابي؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q61" value="a"> أ) الدمج الشامل يهدف إلى تقديم فرص متكافئة للجميع، بينما التمييز الإيجابي يمنح امتيازات لفئة معينة.</label>
+                <label><input type="radio" name="q61" value="b"> ب) التمييز الإيجابي يركز على جميع الأفراد بالتساوي.</label>
+                <label><input type="radio" name="q61" value="c"> ج) لا يوجد فرق بينهما.</label>
+                <label><input type="radio" name="q61" value="d"> د) الدمج الشامل لا يعزز الفرص المتساوية.</label>
+            </div>
+            <div class="answer-box" id="answer61" data-correct="a" data-reason="الشرح: كل منهما له أهداف مختلفة."></div>
+        </div>
+
+        <div class="question">
+            <h3>62. وجود سياسة شاملة في بيئة العمل يؤدي إلى تحسين رضا الموظفين وزيادة ولائهم.</h3>
+            <div class="options">
+                <label><input type="radio" name="q62" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q62" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer62" data-correct="a" data-reason="الشرح: الموظفون الذين يشعرون بالتقدير يكونون أكثر التزامًا بعملهم."></div>
+        </div>
+
+        <div class="question">
+            <h3>63. ما هو أحد العوامل الرئيسية لتحقيق بيئة عمل شاملة؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q63" value="a"> أ) احترام الفروقات الفردية وتعزيز التعاون.</label>
+                <label><input type="radio" name="q63" value="b"> ب) تجنب توظيف الأشخاص من خلفيات مختلفة.</label>
+                <label><input type="radio" name="q63" value="c"> ج) معاملة الجميع بنفس الطريقة تمامًا دون النظر إلى احتياجاتهم.</label>
+                <label><input type="radio" name="q63" value="d"> د) تقليل فرص الأقليات في المؤسسات.</label>
+            </div>
+            <div class="answer-box" id="answer63" data-correct="a" data-reason="الشرح: احترام الفروقات يشجع على الشمولية."></div>
+        </div>
+
+        <div class="question">
+            <h3>64. الشمولية في المؤسسات تقلل من فرص الإبداع والابتكار.</h3>
+            <div class="options">
+                <label><input type="radio" name="q64" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q64" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer64" data-correct="b" data-reason="الشرح: الشمولية تعزز التنوع مما يؤدي إلى زيادة الإبداع."></div>
+        </div>
+
+        <div class="question">
+            <h3>65. ما هو الهدف الأساسي من تحقيق العدالة في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q65" value="a"> أ) ضمان أن جميع الطلاب يحصلون على فرص متساوية للوصول إلى التعليم.</label>
+                <label><input type="radio" name="q65" value="b"> ب) توفير دعم إضافي للطلاب المتفوقين فقط.</label>
+                <label><input type="radio" name="q65" value="c"> ج) تقديم نفس الموارد للجميع دون النظر إلى احتياجاتهم الفردية.</label>
+                <label><input type="radio" name="q65" value="d"> د) تقييد الفرص أمام الطلاب ذوي الاحتياجات الخاصة.</label>
+            </div>
+            <div class="answer-box" id="answer65" data-correct="a" data-reason="الشرح: عدالة التعليم تعني توفير فرص متساوية للجميع."></div>
+        </div>
+
+        <div class="question">
+            <h3>66. تطبيق الشمولية في المؤسسات يؤدي إلى تقليل معدل دوران الموظفين.</h3>
+            <div class="options">
+                <label><input type="radio" name="q66" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q66" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer66" data-correct="a" data-reason="الشرح: الموظفون المقدرون يحدث لديهم انتماء أقرب للشركة."></div>
+        </div>
+
+        <div class="question">
+            <h3>67. ما هو أحد التحديات الرئيسية التي تواجه تحقيق الشمولية في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q67" value="a"> أ) نقص الوعي بأهميتها.</label>
+                <label><input type="radio" name="q67" value="b"> ب) تحسين جودة التعليم.</label>
+                <label><input type="radio" name="q67" value="c"> ج) زيادة الدعم المالي للطلاب.</label>
+                <label><input type="radio" name="q67" value="d"> د) تقليل فرص الأقليات في المدارس.</label>
+            </div>
+            <div class="answer-box" id="answer67" data-correct="a" data-reason="الشرح: نقص المعرفة بالشمولية يمنع من تطبيقها."></div>
+        </div>
+
+        <div class="question">
+            <h3>68. تحقيق التنوع في بيئة العمل يؤدي إلى تحسين أداء الفرق العاملة.</h3>
+            <div class="options">
+                <label><input type="radio" name="q68" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q68" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer68" data-correct="a" data-reason="الشرح: الفرق المتنوعة تقدم حلولاً أفضل وأكثر ابتكارًا."></div>
+        </div>
+
+        <div class="question">
+            <h3>69. العدالة الأفقية تعني توفير نفس الدعم لجميع الطلاب دون النظر إلى احتياجاتهم الفردية.</h3>
+            <div class="options">
+                <label><input type="radio" name="q69" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q69" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer69" data-correct="b" data-reason="الشرح: العدالة الأفقية تعني تكافؤ الفرص."></div>
+        </div>
+
+        <div class="question">
+            <h3>70. ما هو أحد أساليب تعزيز الشمولية في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q70" value="a"> أ) تقديم فرص متكافئة لجميع الموظفين.</label>
+                <label><input type="radio" name="q70" value="b"> ب) إعطاء الأولوية لمجموعة واحدة من الموظفين.</label>
+                <label><input type="radio" name="q70" value="c"> ج) تجاهل الفروقات الثقافية والاجتماعية بين الموظفين.</label>
+                <label><input type="radio" name="q70" value="d"> د) تجنب توظيف الأشخاص من خلفيات مختلفة.</label>
+            </div>
+            <div class="answer-box" id="answer70" data-correct="a" data-reason="الشرح: الفرص المتساوية تشجع الشمولية وتعزز بيئة العمل."></div>
+        </div>
+
+        <div class="question">
+            <h3>71. التنوع في المؤسسات لا يؤثر على اتخاذ القرارات.</h3>
+            <div class="options">
+                <label><input type="radio" name="q71" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q71" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer71" data-correct="b" data-reason="الشرح: التنوع يعزز جودة القرارات."></div>
+        </div>
+
+        <div class="question">
+            <h3>72. ما هو الدور الأساسي للعدالة في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q72" value="a"> أ) ضمان أن يحصل الجميع على حقوق وفرص متساوية.</label>
+                <label><input type="radio" name="q72" value="b"> ب) تفضيل بعض الفئات على حساب الآخرين.</label>
+                <label><input type="radio" name="q72" value="c"> ج) تقديم نفس الدعم للجميع بغض النظر عن احتياجاتهم.</label>
+                <label><input type="radio" name="q72" value="d"> د) تجاهل احتياجات الأفراد المختلفة.</label>
+            </div>
+            <div class="answer-box" id="answer72" data-correct="a" data-reason="الشرح: العدالة تضمن الحقوق والفرص لجميع الأفراد."></div>
+        </div>
+
+        <div class="question">
+            <h3>73. وجود سياسات شاملة في المؤسسات يساعد على تحسين بيئة العمل.</h3>
+            <div class="options">
+                <label><input type="radio" name="q73" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q73" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer73" data-correct="a" data-reason="الشرح: السياسات الشاملة تعزز بيئة العمل وتحسن الأداء."></div>
+        </div>
+
+        <div class="question">
+            <h3>74. ما هو أحد أسباب تعزيز التنوع في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q74" value="a"> أ) زيادة الإبداع والابتكار.</label>
+                <label><input type="radio" name="q74" value="b"> ب) تقليل فرص التعاون بين الموظفين.</label>
+                <label><input type="radio" name="q74" value="c"> ج) زيادة الصراعات داخل الفرق العاملة.</label>
+                <label><input type="radio" name="q74" value="d"> د) جعل اتخاذ القرارات أكثر صعوبة.</label>
+            </div>
+            <div class="answer-box" id="answer74" data-correct="a" data-reason="الشرح: التنوع يعزز الابتكار والإبداع في الفرق."></div>
+        </div>
+
+        <div class="question">
+            <h3>75. التعليم الشامل يركز فقط على الطلاب الموهوبين.</h3>
+            <div class="options">
+                <label><input type="radio" name="q75" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q75" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer75" data-correct="b" data-reason="الشرح: التعليم الشامل يجب أن يشمل جميع الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>76. ما هي إحدى التطورات السياقية التي أثرت على التنوع والشمولية في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q76" value="a"> أ) الهجرة وتزايد التنوع الثقافي</label>
+                <label><input type="radio" name="q76" value="b"> ب) انخفاض معدلات التعليم عالميًا</label>
+                <label><input type="radio" name="q76" value="c"> ج) توحيد المناهج الدراسية في جميع الدول</label>
+                <label><input type="radio" name="q76" value="d"> د) تقليل فرص التعليم للطلاب الموهوبين</label>
+            </div>
+            <div class="answer-box" id="answer76" data-correct="a" data-reason="الشرح: الهجرة تؤدي إلى تنوع الثقافي في التعليم."></div>
+        </div>
+
+        <div class="question">
+            <h3>77. الهجرة تُعتبر عاملًا يؤثر على التنوع في المجتمع.</h3>
+            <div class="options">
+                <label><input type="radio" name="q77" value="a"> أ) صحيح</label>
+                <label><input type="radio" name="q77" value="b"> ب) خطأ</label>
+            </div>
+            <div class="answer-box" id="answer77" data-correct="a" data-reason="الشرح: الهجرة تزيد من التنوع والثقافات."></div>
+        </div>
+
+        <div class="question">
+            <h3>78. أي من الفئات التالية تُعتبر من الأقليات التي تحتاج إلى دعم لتحقيق الدمج الشامل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q78" value="a"> أ) المهاجرون</label>
+                <label><input type="radio" name="q78" value="b"> ب) الطلاب المتفوقون فقط</label>
+                <label><input type="radio" name="q78" value="c"> ج) الموظفون الذين يعملون لساعات إضافية</label>
+                <label><input type="radio" name="q78" value="d"> د) الأشخاص الذين يتحدثون أكثر من لغة</label>
+            </div>
+            <div class="answer-box" id="answer78" data-correct="a" data-reason="الشرح: المهاجرون ينتمون إلى فئة تحتاج للدعم."></div>
+        </div>
+
+        <div class="question">
+            <h3>79. ما هي إحدى طرق تعزيز الشمولية في المؤسسات التعليمية؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q79" value="a"> أ) توفير مناهج مرنة تلبي احتياجات جميع الطلاب</label>
+                <label><input type="radio" name="q79" value="b"> ب) منع الطلاب ذوي الاحتياجات الخاصة من الاندماج مع غيرهم</label>
+                <label><input type="radio" name="q79" value="c"> ج) تقديم نفس طرق التدريس لجميع الطلاب بغض النظر عن احتياجاتهم</label>
+                <label><input type="radio" name="q79" value="d"> د) تقليل عدد الطلاب في المدارس لتحقيق العدالة</label>
+            </div>
+            <div class="answer-box" id="answer79" data-correct="a" data-reason="الشرح: المناهج المرنة تزيد نجاح دمج الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>80. كيف يمكن للمدارس تعزيز المساواة بين الطلاب؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q80" value="a"> أ) تقديم دعم إضافي للطلاب الذين يواجهون صعوبات في التعلم</label>
+                <label><input type="radio" name="q80" value="b"> ب) معاملة جميع الطلاب بنفس الطريقة تمامًا دون النظر إلى احتياجاتهم</label>
+                <label><input type="radio" name="q80" value="c"> ج) السماح فقط للطلاب الموهوبين بالحصول على موارد إضافية</label>
+                <label><input type="radio" name="q80" value="d"> د) تجاهل الفروق الفردية بين الطلاب</label>
+            </div>
+            <div class="answer-box" id="answer80" data-correct="a" data-reason="الشرح: الدعم الإضافي يضمن فرص متساوية."></div>
+        </div>
+
+        <div class="question">
+            <h3>81. ما هي إحدى العوائق الرئيسية التي تواجه تحقيق الشمولية في المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q81" value="a"> أ) المقاومة الثقافية والتقليدية</label>
+                <label><input type="radio" name="q81" value="b"> ب) زيادة الفرص التعليمية</label>
+                <label><input type="radio" name="q81" value="c"> ج) تحسين سياسات التوظيف</label>
+                <label><input type="radio" name="q81" value="d"> د) زيادة التنوع داخل المدارس</label>
+            </div>
+            <div class="answer-box" id="answer81" data-correct="a" data-reason="الشرح: المقاومة الثقافية تعيق التغيير."></div>
+        </div>
+
+        <div class="question">
+            <h3>82. كيف يمكن التغلب على العقبات التي تواجه تحقيق الدمج الشامل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q82" value="a"> أ) نشر الوعي حول أهمية الشمولية</label>
+                <label><input type="radio" name="q82" value="b"> ب) استبعاد الفئات المختلفة عن الأغلبية</label>
+                <label><input type="radio" name="q82" value="c"> ج) تطبيق سياسات تمييز إيجابي لصالح فئة معينة</label>
+                <label><input type="radio" name="q82" value="d"> د) تقليل فرص التعلم للطلاب ذوي الاحتياجات الخاصة</label>
+            </div>
+            <div class="answer-box" id="answer82" data-correct="a" data-reason="الشرح: نشر الوعي يزيد من الفهم وأهمية الدمج."></div>
+        </div>
+
+        <div class="question">
+            <h3>83. أي مما يلي يُعتبر أحد أبعاد التنوع الرئيسية؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q83" value="a"> أ) اللغة</label>
+                <label><input type="radio" name="q83" value="b"> ب) نوع الحذاء الذي يرتديه الفرد</label>
+                <label><input type="radio" name="q83" value="c"> ج) الطول</label>
+                <label><input type="radio" name="q83" value="d"> د) الوزن</label>
+            </div>
+            <div class="answer-box" id="answer83" data-correct="a" data-reason="الشرح: اللغة هي عامل مهم في التنوع."></div>
+        </div>
+
+	
+          <div class="question">
+            <h3>84. لماذا يُعتبر تحقيق التنوع أمرًا مهمًا في المؤسسات التعليمية؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q84" value="a"> أ) لأنه يساعد في بناء بيئة تعلّمية أكثر شمولًا وانفتاحًا</label>
+		<label><input type="radio" name="q84" value="b"> ب) لأنه يجعل التعليم أكثر صعوبة</label>
+                <label><input type="radio" name="q84" value="c"> ج) لأنه يسبب مشكلات في التواصل بين الطلاب</label>
+                <label><input type="radio" name="q84" value="d"> د) لأنه يقلل من فرص الطلاب في تحقيق النجاح</label>
+            </div>
+            <div class="answer-box" id="answer84" data-correct="a" data-reason="الشرح: التنوع يعزز التفاهم والانفتاح."></div>
+        </div>
+
+
+	<div class="question">
+            <h3>85. أي من العوامل التالية يُمكن أن يُساعد في تحقيق الدمج الشامل في العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q85" value="a"> أ) وضع سياسات واضحة تدعم الشمولية</label>
+                <label><input type="radio" name="q85" value="b"> ب) تعيين موظفين من خلفيات متشابهة فقط</label>
+                <label><input type="radio" name="q85" value="c"> ج) منع الموظفين من التعبير عن ثقافاتهم المختلفة</label>
+                <label><input type="radio" name="q85" value="d"> د) معاملة جميع الموظفين بنفس الطريقة بغض النظر عن احتياجاتهم</label>
+            </div>
+            <div class="answer-box" id="answer85" data-correct="a" data-reason="الشرح: السياسات الواضحة تشجع الشمولية."></div>
+        </div>
+
+        <div class="question">
+            <h3>86. ما هي العلاقة بين التنوع والشمولية في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q86" value="a"> أ) التنوع هو وجود اختلافات، بينما الشمولية تعني استيعاب هذه الاختلافات وتعزيز بيئة متكاملة</label>
+                <label><input type="radio" name="q86" value="b"> ب) لا توجد علاقة بينهما</label>
+                <label><input type="radio" name="q86" value="c"> ج) التنوع يُقصد به دعم الفئات الأقل حظًا فقط</label>
+                <label><input type="radio" name="q86" value="d"> د) الشمولية تعني استبعاد الفئات المختلفة</label>
+            </div>
+            <div class="answer-box" id="answer86" data-correct="a" data-reason="الشرح: التنوع والشمولية يعملان معاً لتعزيز الفهم والاحترام."></div>
+        </div>
+
+        <div class="question">
+            <h3>87. ما هي إحدى طرق تحقيق الدمج الشامل لذوي الإعاقة في بيئات العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q87" value="a"> أ) توفير وسائل تيسير مناسبة تساعدهم في أداء مهامهم</label>
+                <label><input type="radio" name="q87" value="b"> ب) تقليل فرصهم في التوظيف</label>
+                <label><input type="radio" name="q87" value="c"> ج) وضعهم في وظائف محدودة دون فرصة للنمو</label>
+                <label><input type="radio" name="q87" value="d"> د) منعهم من المشاركة في الفرق الجماعية</label>
+            </div>
+            <div class="answer-box" id="answer87" data-correct="a" data-reason="الشرح: وسائل التيسير تساعد في دمجهم."></div>
+        </div>
+
+        <div class="question">
+            <h3>88. ما هو الدور الأساسي للقوانين والسياسات في دعم التنوع والإنصاف والشمولية؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q88" value="a"> أ) ضمان حقوق جميع الأفراد وتوفير فرص متساوية</label>
+                <label><input type="radio" name="q88" value="b"> ب) منع بعض الفئات من المشاركة في المجتمع</label>
+                <label><input type="radio" name="q88" value="c"> ج) تطبيق سياسات تمييز إيجابي لصالح مجموعة محددة</label>
+                <label><input type="radio" name="q88" value="d"> د) تجاهل التنوع والتركيز فقط على الكفاءات</label>
+            </div>
+            <div class="answer-box" id="answer88" data-correct="a" data-reason="الشرح: القوانين تدعم الحقوق الأساسية."></div>
+        </div>
+
+        <div class="question">
+            <h3>89. ما هو الهدف الرئيسي من التعليم الشامل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q89" value="a"> أ) توفير فرص تعلم لجميع الطلاب مع مراعاة احتياجاتهم المختلفة</label>
+                <label><input type="radio" name="q89" value="b"> ب) تقديم نفس طرق التدريس لجميع الطلاب لجميع الطلاب بدون استثناء</label>
+                <label><input type="radio" name="q89" value="c"> ج) التركيز فقط على الطلاب الموهوبين</label>
+                <label><input type="radio" name="q89" value="d"> د) إقصاء الطلاب الذين يواجهون صعوبات تعليمية</label>
+            </div>
+            <div class="answer-box" id="answer89" data-correct="a" data-reason="الشرح: التعليم الشامل يستهدف دعم جميع الطلاب."></div>
+        </div>
+
+        <div class="question">
+            <h3>90. كيف يمكن للمؤسسات دعم التنوع بين الموظفين؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q90" value="a"> أ) تنفيذ برامج تدريبية لتعزيز فهم الثقافات المختلفة</label>
+                <label><input type="radio" name="q90" value="b"> ب) تعيين أشخاص من نفس الخلفية فقط</label>
+                <label><input type="radio" name="q90" value="c"> ج) منع الموظفين من التعبير عن هويتهم الثقافية</label>
+                <label><input type="radio" name="q90" value="d"> د) معاملة جميع الموظفين بنفس الطريقة بغض النظر عن اختلافاتهم</label>
+            </div>
+            <div class="answer-box" id="answer90" data-correct="a" data-reason="الشرح: برامج التدريب تعزز الفهم والاحترام."></div>
+        </div>
+
+        <div class="question">
+            <h3>91. ما هو الدور الأساسي للتنوع في اتخاذ القرارات داخل المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q91" value="a"> أ) تقديم وجهات نظر مختلفة تؤدي إلى قرارات أكثر كفاءة</label>
+                <label><input type="radio" name="q91" value="b"> ب) إبطاء عملية اتخاذ القرار</label>
+                <label><input type="radio" name="q91" value="c"> ج) تقليل مستوى التعاون بين الموظفين</label>
+                <label><input type="radio" name="q91" value="d"> د) جعل القرارات أقل دقة</label>
+            </div>
+            <div class="answer-box" id="answer91" data-correct="a" data-reason="الشرح: التنوع يعزز النقاش والإبداع في صناعة القرار."></div>
+        </div>
+
+        <div class="question">
+            <h3>92. أي من الفئات التالية تحتاج إلى دعم لتحقيق العدالة في التعليم؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q92" value="a"> أ) الطلاب ذوو الاحتياجات الخاصة</label>
+                <label><input type="radio" name="q92" value="b"> ب) الطلاب المتفوقون فقط</label>
+                <label><input type="radio" name="q92" value="c"> ج) الطلاب الذين لا يواجهون أي صعوبات تعليمية</label>
+                <label><input type="radio" name="q92" value="d"> د) جميع الطلاب على حد سواء دون أي استثناء</label>
+            </div>
+            <div class="answer-box" id="answer92" data-correct="a" data-reason="الشرح: الطلاب ذوي الاحتياجات الخاصة يحتاجون لدعم إضافي لتحقيق العدالة."></div>
+        </div>
+
+        <div class="question">
+            <h3>93. ما هي إحدى استراتيجيات تعزيز الشمولية في المؤسسات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q93" value="a"> أ) إنشاء سياسات عمل مرنة تراعي احتياجات الجميع</label>
+                <label><input type="radio" name="q93" value="b"> ب) توفير فرص أقل للفئات الأقل تمثيلًا</label>
+                <label><input type="radio" name="q93" value="c"> ج) توظيف أشخاص من خلفية ثقافية واحدة</label>
+                <label><input type="radio" name="q93" value="d"> د) معاملة جميع الموظفين بنفس الطريقة بغض النظر عن اختلافاتهم</label>
+            </div>
+            <div class="answer-box" id="answer93" data-correct="a" data-reason="الشرح: سياسات مرنة تتيح للموظفين تحقيق أقصى استفادة من العمل."></div>
+        </div>
+
+        <div class="question">
+            <h3>94. لماذا يُعد الإنصاف أكثر عدالة من المساواة في بعض الحالات؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q94" value="a"> أ) لأنه يراعي الاحتياجات الفردية لكل شخص</label>
+                <label><input type="radio" name="q94" value="b"> ب) لأنه يقدم نفس الموارد للجميع</label>
+                <label><input type="radio" name="q94" value="c"> ج) لأنه يمنح امتيازات لفئة معينة</label>
+                <label><input type="radio" name="q94" value="d"> د) لأنه لا يأخذ الاختلافات الشخصية في الاعتبار</label>
+            </div>
+            <div class="answer-box" id="answer94" data-correct="a" data-reason="الشرح: الإنصاف يضمن الموارد حسب الحاجة."></div>
+        </div>
+
+        <div class="question">
+            <h3>95. أي مما يلي يُعد من فوائد تحقيق الشمولية في بيئة العمل؟</h3>
+            <div class="options">
+                <label><input type="radio" name="q95" value="a"> أ) زيادة رضا الموظفين وتحفيزهم</label>
+                <label><input type="radio" name="q95" value="b"> ب) تقليل فرص الإبداع والابتكار</label>
+                <label><input type="radio" name="q95" value="c"> ج) زيادة الصراعات داخل الفرق</label>
+                <label><input type="radio" name="q95" value="d"> د) إبطاء عملية اتخاذ القرارات</label>
+            </div>
+            <div class="answer-box" id="answer95" data-correct="a" data-reason="الشرح: بيئات العمل التي تعزز الشمولية تكون أكثر رضا وإنتاجية."></div>
+        </div>
+
+	
+
+
+
+
+
+
+
+        
+   
+
+        
+
+    </div>
+
+    <script>
+        // نظام التصحيح التلقائي
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const questionId = e.target.name;
+                const answerBox = document.getElementById(`answer${questionId.substring(1)}`);
+                const correctAnswer = answerBox.dataset.correct;
+                const explanation = answerBox.dataset.reason || '';
+
+                answerBox.innerHTML = e.target.value === correctAnswer ? 
+                    `✅ إجابة صحيحة<br><small>${explanation}</small>` : 
+                    `❌ إجابة خاطئة<br><small>${explanation}</small>`;
+
+                answerBox.style.display = 'block';
+                answerBox.className = `answer-box ${e.target.value === correctAnswer ? 'correct' : 'incorrect'}`;
+            });
+        });
+
+        // وظائف التحكم
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('.answer-box').forEach(box => {
+                box.style.display = 'none';
+                box.className = 'answer-box';
+            });
+        }
+
+        function showAllAnswers() {
+    // Define a map for the answer letters
+    const answerLetters = {
+        'a': 'أ',
+        'b': 'ب',
+        'c': 'ج',
+        'd': 'د'
+    };
+
+    // Iterate over each answer box
+    document.querySelectorAll('.answer-box').forEach(box => {
+        box.style.display = 'block'; // Show the answer box
+        box.className = `answer-box ${box.dataset.correct ? 'correct' : ''}`; // Set the class based on correctness
+
+        // Retrieve the correct letter directly from the dataset
+        const correctLetter = answerLetters[box.dataset.correct];
+
+        // Check if correctLetter is valid
+        if (correctLetter) {
+            box.innerHTML = `الإجابة الصحيحة: ${correctLetter}<br><small>${box.dataset.reason || ''}</small>`;
+        } else {
+            console.error('Invalid correct answer letter:', box.dataset.correct);
+            box.innerHTML = 'الإجابة الصحيحة: غير متوفرة';
+        }
+    });
+}
+
+// Call this function at the appropriate time, such as when a button is clicked
+
+        function hideAllAnswers() {
+            document.querySelectorAll('.answer-box').forEach(box => {
+                box.style.display = 'none';
+            });
+        }
+
+        // وظائف التمرير
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
